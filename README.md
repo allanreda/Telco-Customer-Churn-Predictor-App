@@ -1,8 +1,7 @@
 # Telco Customer Churn App
 Try it out live at: https://telco-customer-churn-app-dot-sylvan-mode-413619.nw.r.appspot.com/
 
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/b4b6d2f6-8d28-4f64-923f-fe4c0883a2b6)
-
+![image](https://github.com/user-attachments/assets/73526f4f-c7b8-4498-91bc-089d8fa414b2)
 
 ## Overview  
 A web-based ML-application, built on top of the popular "Telco Customer Churn"-dataset. The goal of this project was to train a logistic regression model to such a satisfactory performance, that its predictions could be used to provide actionable insights for the business. Furthermore, the goal was that the model should be usable by every employee, and not be reserved only for those with programming/data science skills - and that requires the creation of a UI in the form of a live web-application. The final idea being that employees should be able to input existing customer data into the UI, and recieve an output message on whether the particular customer had a high risk of leaving or not.   
@@ -27,12 +26,12 @@ In this section, we will cover the following:
 To get a sense of the data that I was working with, I started out with a brief exploratory analysis.  
 The most important part to check in an exploratory data analysis, prior to any classification model, is the balance of the categories in the target variable.  
 For this dataset, the target variable which is the churn column, the balance is 73,5% retained and 26,5% churned.  
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/c741e03b-b9de-4070-a11e-b0fd00413f95)  
+![image](https://github.com/user-attachments/assets/c037dfe7-d48e-459d-8296-319965018bb1)  
 
 While that is a large imbalance, it wasn't enough to cause considerations for sampling, later on. I therefore decided to proceed with the target variable as it was.
 
 All 16 categorical variables were visualized with simple pie charts, and the results can be seen below.
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/4c7132de-8b3d-4897-a526-33222c598943)
+![image](https://github.com/user-attachments/assets/020c9200-ddf7-4343-876b-58c7d545e5d7)  
 
 The three continuous columns 'tenure', 'MonthlyCharges', and 'TotalCharges' were first checked using their descriptive statistics. 
 
@@ -41,11 +40,11 @@ The three continuous columns 'tenure', 'MonthlyCharges', and 'TotalCharges' were
 descriptive_stats = raw_df[['tenure','MonthlyCharges', 'TotalCharges']].describe()
 print(descriptive_stats)
 ```
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/24edabdf-ca2f-4bec-9514-e6b1307ef858)  
+![image](https://github.com/user-attachments/assets/28632894-ea31-4ba3-ba5a-1ca03ab27934)  
 All three columns seemed to have a good varied distribution, which could be seen by the values of the quartiles relative to the mean value and the standard deviation. 
 However, the maximum values were all significantly higher than the 75% quartile which indicated outliers, that needed to be handled.  
 When visualized, the presence of outliers in the maximum values became further evident.
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/0d9866ed-af63-453f-8219-da3ed2457fdf)
+![image](https://github.com/user-attachments/assets/8600a58a-21a7-475c-90c6-3d7ea9177a6e)  
 
 #### Feature engineering and preprocessing
 The data in this dataset mostly consists of categorical variables - either binary or multinomial. At this step of the process, they all had a string datatype and therefore needed to be encoded to integers to be processed by the logistic regression model. The continuous variables should also be standardized as a preprocessing step, but this is done later, to avoid interfering with the coming check for multicollinearity.
@@ -116,10 +115,10 @@ for column in ['tenure','MonthlyCharges', 'TotalCharges']:
     raw_df.loc[raw_df[column]>threshold, column] = threshold
 ```
 The descriptive statistics for the continous columns looked like this afterwards. It could now be confirmed that the extreme outliers had been handled gracefully, while still maintaining the integrity of the data distribution.  
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/4fd2d1c5-cde4-4fcd-b9bf-bc36e1839673)
+![image](https://github.com/user-attachments/assets/539e9fca-2387-4d54-a13e-43e306210449)  
 
 I could then continue to check for multicollinearity between all the predictor variables. I started with plotting a correlation matrix.  
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/509b7464-7ced-4704-acee-19bf746419f2)  
+![image](https://github.com/user-attachments/assets/f33a5e80-c440-412c-8891-4a37a51d81a1)  
 Overall it didn't look like the dataset was riddled with multicollinearity. I decided to pinpoint and eliminate all variable pairs with a correlation greater than 0.7. The choice of setting the threshold to 0.7 was arbitrary and can be changed higher or lower, due to your own preferences.  
 ```python
 # Calculate the correlation matrix
@@ -142,7 +141,7 @@ for column in upper_triangle.columns:
 print(high_correlation_pairs)
 ```
 Luckily, there were only two pairs with a correlation greater than 0.7.  
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/a8ea92f5-afd9-4ae3-8acb-6ecf1f54ac64)  
+![image](https://github.com/user-attachments/assets/14f1b14c-fbf7-4c5a-aff0-bcd90171e816)  
 So I eliminated one of each variable pair and thereby ensured parameter stability for the model I was about to train.
 ```python
 # Drop one of each correlated pairs
@@ -185,10 +184,10 @@ model.fit(X_train, y_train)
 ```
 
 The confusion matrix for that model clearly showed that it was a lot better at predicting the retained customers than the churned customers.  
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/2a395f82-dffc-4c41-aa25-0aa9617396dc)  
+![image](https://github.com/user-attachments/assets/49616bfa-766e-481f-93a2-ec054425ee77)  
 
 To get a more precise understanding, I also looked at the classification report.  
-![image](https://github.com/allanreda/Telco-Customer-Churn-App/assets/89948110/d8b6f194-aa79-4132-aeb1-4bdff0385053)  
+![image](https://github.com/user-attachments/assets/77ea15f7-bea8-4374-8ec6-52bae1eab953)  
 It became evident that the model performed strongly in identifying the retained customers, while performing more moderately in identifying the churned customers. The precision score for the "churned" class was 0.52 which effectively means that 48% of the customers that were predicted as churned, were actually retained. That in itself is a relatively poor performance. The recall score for the same class, on the other hand, is significantly higher, at 0.79. This means that the model was able to correctly identify 79% of the customers that were churned.  
 
 For this specific use case, that could be relatively ideal. In practice, it means that the model is effective at identifying customers who are likely to churn, while also classifying customers who are not at risk of churning, as likely to churn. Depending on the company's situation and their available resources, they would be able to identify and take proactive measures (e.g. better service or exclusive deals) for most customers likely to churn while also improving customer relations by engaging with customers who are not at immediate risk.  
@@ -235,9 +234,9 @@ First, I defined the hyperparameter grid with multiple variations of settings to
 The "GridSearchCV" function was then set up to perform a grid search with a five-fold cross-validation, optimizing for the recall score. The recall score is used, because the function will then, by default, optimize for the recall of the positive class, (churned), which is what I deemed most relevant in this case. The cv=StratifiedKFold(n_splits=5) ensures that each of the five folds has the same proportion of classes, and n_jobs=-1 allows the use of all available CPU cores to speed up the computation.  
 
 The average recall score for the five folds turned out to be 0.79 - the same as the recall score from the initial model.  
-![image](https://github.com/user-attachments/assets/4df9e56a-ded2-4bb4-b6e0-d5a3e4a8e082)  
+![image](https://github.com/user-attachments/assets/4c6b19e2-0368-4e1d-bdb3-1944e3c27ba1)  
 The classification report was also identical to the one from the initial model.  
-![image](https://github.com/user-attachments/assets/2c3e8e93-471e-4309-a014-d0a59d9a1294)  
+![image](https://github.com/user-attachments/assets/19053837-fad8-47e3-8624-9942ecd00251)   
 Therefore, I concluded that the model wasn't able to be further improved by the hyperparameter tuning, and proceeded with the model I had.  
 
 As a final step, before I started building the app, I decided to take a look at the intercept and coefficients, to get a better understanding of the final model.  
@@ -255,15 +254,15 @@ print(model_coefficients)
 ```
 
 When doing a logistic regression model, the intercept represents the log-odds of the outcome, if all predictor variables are zero. When the log-odds is exponentiated, we get the odds which can then be used in the logistic function to calculate a probability, to better interpret the model.  
-![image](https://github.com/user-attachments/assets/33720a8a-4965-471d-acdb-42f47186dcbb)  
+![image](https://github.com/user-attachments/assets/d324d6b7-27ac-4e07-a80c-8d33f8cd66b9)  
 In this case, I got a probability of 0.48022312. In practice, that means that there is a 48% chance of churn, when all predictor variables are zero. One could say that 48% is the starting point, and knowing that will therefore provide a better insight into how much the coefficients are affecting that starting point.  
 
 From the plot of the coefficients of the predictor variables, it became apparent that some variables had significantly more influence on the model than others, and that some variables had no influence at all.  
-![image](https://github.com/user-attachments/assets/ecc28a45-d738-4db6-8c15-486647cc09e8)  
+![image](https://github.com/user-attachments/assets/17c8bf61-0664-4753-b277-28cb4cbb7e74)  
 For example, 'MonthlyCharges' has the highest positive coefficient, indicating that an increase in monthly charges significantly raises the odds of a customer churning. 'Contract_Month-to-month' also shows a strong positive influence, meaning customers with a month-to-month contract are more likely to churn compared to those with longer-term contracts. 'tenure' and 'PhoneService' have the largest negative coefficients, indicating that longer tenure and having phone service are associated with lower churn rates. All this information could be useful for the company if they want to take action on the model predictions, such as creating customer retention strategies, as they now know where they should put more focus.  
 
 For the predictor variables that had no influence on the model (coefficient of exactly zero), I decided I had to pinpoint and remove them, to improve the usability of the application I was about to build. I saw no reason as to why users should input data that had no impact on the outcome of the prediction.  
-![image](https://github.com/user-attachments/assets/3cc31781-e073-445c-93a8-27860a9f90f3)  
+![image](https://github.com/user-attachments/assets/97ca2b0f-8d04-4deb-8e43-3f69568f5bec)  
 As can be seen on the screenshot, the variables 'DeviceProtection_No', 'PaymentMethod_Mailed check', and 'MultipleLines_Yes' are dummies that are derived from variables whose other categories do have an impact on the model. For the sake of usability and explainability of the application and the model, I decided to keep those. For the rest of the variables, 'gender', 'StreamingTV_Yes', 'StreamingTV_No', 'StreamingMovies_Yes', and 'StreamingMovies_No' I decided that they were going to be excluded from the application.
 
 
