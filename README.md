@@ -6,13 +6,20 @@ Try it out live at: https://telco-customer-churn-app-dot-sylvan-mode-413619.nw.r
 ## Overview  
 A web-based ML-application, built on top of the popular "Telco Customer Churn"-dataset. The goal of this project was to train a logistic regression model to such a satisfactory performance, that its predictions could be used to provide actionable insights for the business. Furthermore, the goal was that the model should be usable by every employee, and not be reserved only for those with programming/data science skills - and that requires the creation of a UI in the form of a live web-application. The final idea being that employees should be able to input existing customer data into the UI, and recieve an output message on whether the particular customer had a high risk of leaving or not.   
 
-This repository covers the following points:  
--Exploratory data analysis  
--Feature engineering and preprocessing  
--Outliers and multicollinearity  
--Logistic Regression training and hyperparameter tuning  
--Backend and frontend creation of Gradio web-application  
--GCP App Engine deployment with YAML-file  
+## Table of Contents
+
+- [Overview](#overview)
+- [Explanation](#explanation)
+  - [development.py](#developmentpy)
+    - [Exploratory data analysis](#exploratory-data-analysis)
+    - [Feature engineering and preprocessing](#feature-engineering-and-preprocessing)
+    - [Outliers and multicollinearity](#outliers-and-multicollinearity)
+    - [Logistic Regression training and hyperparameter tuning](#logistic-regression-training-and-hyperparameter-tuning)
+  - [deployment/app.py](#deploymentapppy)
+    - [Backend and frontend creation of Gradio web-application](#backend-and-frontend-creation-of-gradio-web-application)
+  - [deployment/app.yaml](#deploymentappyaml)
+- [Technologies](#technologies)
+
 
 ## Explanation
 ### development.py  
